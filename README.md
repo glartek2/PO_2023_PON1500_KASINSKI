@@ -1,4 +1,4 @@
-# Programowanie-Obiektywne
+# PO_2023_PON1500_KASIŃSKI
 Laboratoria i projekt 2 rok 2023/24
 
 Sebastian Kasiński
