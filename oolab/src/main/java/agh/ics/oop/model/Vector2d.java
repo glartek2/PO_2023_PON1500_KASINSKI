@@ -21,12 +21,12 @@ public class Vector2d {
         return "(" + this.x + "," + this.y + ")";
     }
 
-    public boolean precedes(Vector2d other){
-        return  (other.x <= this.x && other.y <= this.y);
+    public boolean precedes(Vector2d other) {
+        return (this.x <= other.x && this.y <= other.y);
     }
 
-    public boolean follow(Vector2d other){
-        return  (other.x >= this.x && other.y >= this.y);
+    public boolean follows(Vector2d other) {
+        return (this.x >= other.x && this.y >= other.y);
     }
 
     public Vector2d add(Vector2d other) {
