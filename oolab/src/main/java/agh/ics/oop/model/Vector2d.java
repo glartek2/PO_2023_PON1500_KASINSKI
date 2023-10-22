@@ -2,8 +2,8 @@ package agh.ics.oop.model;
 
 public class Vector2d {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Vector2d(int x, int y) {
         this.x = x;
@@ -17,9 +17,8 @@ public class Vector2d {
         return this.y;
     }
 
-    public String toString(){
-        String napis = "(" + this.x + "," + this.y + ")";
-        return napis;
+    public String toString() {
+        return "(" + this.x + "," + this.y + ")";
     }
 
     public boolean precedes(Vector2d other){
@@ -30,59 +29,46 @@ public class Vector2d {
         return  (other.x >= this.x && other.y >= this.y);
     }
 
-    public Vector2d add(Vector2d other){
-        Vector2d newVector = new Vector2d(0,0);
-        newVector.x = this.x + other.x;
-        newVector.y = this.y + other.y;
-        return newVector;
+    public Vector2d add(Vector2d other) {
+        return new Vector2d(this.x + other.x, this.y + other.y);
     }
 
-    public Vector2d subtract(Vector2d other){
-        Vector2d newVector = new Vector2d(0,0);
-        newVector.x = this.x - other.x;
-        newVector.y = this.y - other.y;
-        return newVector;
+    public Vector2d subtract(Vector2d other) {
+        return new Vector2d(this.x - other.x, this.y - other.y);
     }
 
-    public Vector2d upperRight(Vector2d other){
-        Vector2d newVector = new Vector2d(0,0);
-        if (other.x > this.x){
-            newVector.x = other.x;
-        }else{
-            newVector.x = this.x;
+    public Vector2d upperRight(Vector2d other) {
+        int maxX = Math.max(this.x, other.x);
+        int maxY = Math.max(this.y, other.y);
+        return new Vector2d(maxX, maxY);
+    }
+
+    public Vector2d lowerLeft(Vector2d other) {
+        int minX = Math.min(this.x, other.x);
+        int minY = Math.min(this.y, other.y);
+        return new Vector2d(minX, minY);
+    }
+
+    public Vector2d opposite() {
+        return new Vector2d(-this.x, -this.y);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
         }
-        if (other.y > this.y){
-            newVector.y = other.y;
-        }else{
-            newVector.y = this.y;
+        if (!(other instanceof Vector2d)) {
+            return false;
         }
-        return newVector;
+        Vector2d that = (Vector2d) other;
+        return this.x == that.x && this.y == that.y;
     }
 
-    public Vector2d lowerLeft(Vector2d other){
-        Vector2d newVector = new Vector2d(0,0);
-        if (other.x < this.x){
-            newVector.x = other.x;
-        }else{
-            newVector.x = this.x;
-        }
-        if (other.y < this.y){
-            newVector.y = other.y;
-        }else{
-            newVector.y = this.y;
-        }
-        return newVector;
+    @Override
+    public int hashCode() {
+        int result = Integer.hashCode(x);
+        result = 31 * result + Integer.hashCode(y);
+        return result;
     }
-
-    public Vector2d opposite(){
-        Vector2d newVector = new Vector2d(0,0);
-        newVector.x = -1 * this.x;
-        newVector.y = -1 * this.y;
-        return newVector;
-    }
-
-    public boolean equals(Object obj) {
-        return (this == obj);
-    }
-
 }
