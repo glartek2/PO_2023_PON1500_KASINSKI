@@ -1,5 +1,6 @@
 package agh.ics.oop;
 
+import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 
@@ -28,6 +29,28 @@ public class World {
         Vector2d position2 = new Vector2d(-2,1);
         System.out.println(position2);
         System.out.println(position1.add(position2));
+
+
+        // Test toString method
+        for (MapDirection direction : MapDirection.values()) {
+            System.out.println(direction + ": " + direction.toString());
+        }
+
+        // Test next method
+        for (MapDirection direction : MapDirection.values()) {
+            System.out.println(direction + " -> " + direction.next());
+        }
+
+        // Test previous method
+        for (MapDirection direction : MapDirection.values()) {
+            System.out.println(direction + " -> " + direction.previous());
+        }
+
+        // Test toUnitVector method
+        for (MapDirection direction : MapDirection.values()) {
+            System.out.println(direction + " -> " + direction.toUnitVector());
+        }
+
 
     }
 
