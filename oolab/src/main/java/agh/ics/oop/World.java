@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.Vector2d;
 
 import java.util.Scanner;
 
@@ -20,6 +21,14 @@ public class World {
         MoveDirection[] directions = OptionsParser.parse(arguments);
         run(directions);
         System.out.print("System zakończył działanie\n");
+
+
+        Vector2d position1 = new Vector2d(1,2);
+        System.out.println(position1);
+        Vector2d position2 = new Vector2d(-2,1);
+        System.out.println(position2);
+        System.out.println(position1.add(position2));
+
     }
 
 
