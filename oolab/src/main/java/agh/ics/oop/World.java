@@ -13,13 +13,13 @@ public class World {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter arguments separated by spaces (press Enter to finish): ");
-        String input = scanner.nextLine();
+        //System.out.print("Enter arguments separated by spaces (press Enter to finish): ");
+        //String input = scanner.nextLine();
 
-        String[] arguments = input.split(" ");
+        //String[] arguments = input.split(" ");
 
         System.out.print("System wystartował\n");
-        MoveDirection[] directions = OptionsParser.parse(arguments);
+        MoveDirection[] directions = OptionsParser.parse(args);
         run(directions);
         System.out.print("System zakończył działanie\n");
 
