@@ -73,7 +73,7 @@ public enum MapDirection {
                 return newVector;
             }
         }
-        return null;
+        return new Vector2d(0, 0);
     }
 }
 

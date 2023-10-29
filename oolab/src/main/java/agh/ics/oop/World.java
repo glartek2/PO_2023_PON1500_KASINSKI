@@ -1,9 +1,11 @@
 package agh.ics.oop;
 
+import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -18,9 +20,21 @@ public class World {
 
         //String[] arguments = input.split(" ");
 
+        Animal animal = new Animal();
+        System.out.println("Animal position and orientation: " + animal);
+
+        List<MoveDirection> directionsList = OptionsParser.parse(args);
+        MoveDirection[] directionsArray = directionsList.toArray(new MoveDirection[0]);
+
         System.out.print("System wystartował\n");
-        MoveDirection[] directions = OptionsParser.parse(args);
-        run(directions);
+        
+        for (MoveDirection direction : directionsArray) {
+            animal.move(direction);
+            System.out.println("Animal position after moving: " + animal);
+        }
+        System.out.println("Animal position after moving left: " + animal);
+
+        //run(directions);
         System.out.print("System zakończył działanie\n");
 
 
