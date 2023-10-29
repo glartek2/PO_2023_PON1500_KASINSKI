@@ -26,44 +26,21 @@ public class World {
         List<MoveDirection> directionsList = OptionsParser.parse(args);
         MoveDirection[] directionsArray = directionsList.toArray(new MoveDirection[0]);
 
-        System.out.print("System wystartował\n");
-        
-        for (MoveDirection direction : directionsArray) {
-            animal.move(direction);
-            System.out.println("Animal position after moving: " + animal);
-        }
-        System.out.println("Animal position after moving left: " + animal);
+        System.out.print("System wystartowal\n");
+
+        List<MoveDirection> directions = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
+        Simulation simulation = new Simulation(directions, positions);
+        simulation.run();
+
+        //for (MoveDirection direction : directionsArray) {
+            //animal.move(direction);
+            //System.out.println("Animal position after moving: " + animal);
+        //}
+        //System.out.println("Animal position after moving left: " + animal);
 
         //run(directions);
-        System.out.print("System zakończył działanie\n");
-
-
-        Vector2d position1 = new Vector2d(1,2);
-        System.out.println(position1);
-        Vector2d position2 = new Vector2d(-2,1);
-        System.out.println(position2);
-        System.out.println(position1.add(position2));
-
-
-        // Test toString method
-        for (MapDirection direction : MapDirection.values()) {
-            System.out.println(direction + ": " + direction.toString());
-        }
-
-        // Test next method
-        for (MapDirection direction : MapDirection.values()) {
-            System.out.println(direction + " -> " + direction.next());
-        }
-
-        // Test previous method
-        for (MapDirection direction : MapDirection.values()) {
-            System.out.println(direction + " -> " + direction.previous());
-        }
-
-        // Test toUnitVector method
-        for (MapDirection direction : MapDirection.values()) {
-            System.out.println(direction + " -> " + direction.toUnitVector());
-        }
+        System.out.print("System zakonczyl dzialanie\n");
 
 
     }

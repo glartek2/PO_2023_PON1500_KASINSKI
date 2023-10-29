@@ -28,8 +28,8 @@ public class Animal {
     public void move(MoveDirection direction){
         Vector2d newPosition;
         switch (direction){
-            case RIGHT -> this.orientation.next();
-            case LEFT -> this.orientation.previous();
+            case RIGHT -> this.orientation = this.orientation.next();
+            case LEFT -> this.orientation = this.orientation.previous();
             case FORWARD -> {
                 newPosition = this.currentPosition.add(this.orientation.toUnitVector());
                 if (newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4))) {
