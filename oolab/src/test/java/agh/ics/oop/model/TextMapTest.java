@@ -1,35 +1,44 @@
 package agh.ics.oop.model;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class TextMapTest {
-    public static void main(String[] args) {
+
+    @Test
+    public void testPlaceAndMove() {
         TextMap textMap = new TextMap();
 
-        // Place strings on the map
-        textMap.place("Ala", 0);
-        textMap.place("ma", 1);
-        textMap.place("sowoniedźwiedzia", 2);
+        assertTrue(textMap.place("Ala", 0));
+        assertTrue(textMap.place("ma", 1));
+        assertTrue(textMap.place("sowoniedzwiedzia", 2));
 
-        // Print the initial state
-        printTextMap(textMap);
+        assertEquals("Ala", textMap.objectAt(0));
+        assertEquals("ma", textMap.objectAt(1));
+        assertEquals("sowoniedzwiedzia", textMap.objectAt(2));
 
-        // Move "ma" to the EAST
         textMap.move("ma", MoveDirection.FORWARD);
-        printTextMap(textMap);
+        assertEquals("Ala", textMap.objectAt(0));
+        assertEquals("sowoniedzwiedzia", textMap.objectAt(1));
+        assertEquals("ma", textMap.objectAt(2));
 
-        // Move "ma" to the EAST again (it should not move further)
         textMap.move("ma", MoveDirection.BACKWARD);
-        printTextMap(textMap);
+        assertEquals("Ala", textMap.objectAt(0));
+        assertEquals("ma", textMap.objectAt(1));
+        assertEquals("sowoniedzwiedzia", textMap.objectAt(2));
 
-        // Move "ma" to the WEST
         textMap.move("ma", MoveDirection.BACKWARD);
-        printTextMap(textMap);
+        assertEquals("ma", textMap.objectAt(0));
+        assertEquals("Ala", textMap.objectAt(1));
+        assertEquals("sowoniedzwiedzia", textMap.objectAt(2));
+
+        textMap.move("ma", MoveDirection.BACKWARD);
+        assertEquals("ma", textMap.objectAt(0));
+        assertEquals("Ala", textMap.objectAt(1));
+        assertEquals("sowoniedzwiedzia", textMap.objectAt(2));
     }
 
-    private static void printTextMap(TextMap textMap) {
-        for (int i = 0; i < textMap.textList.size(); i++) {
-            System.out.println("Position " + i + ": " + textMap.textList.get(i));
-        }
-        System.out.println();
-    }
 }
 
