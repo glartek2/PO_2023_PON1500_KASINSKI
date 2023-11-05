@@ -4,8 +4,9 @@ import agh.ics.oop.MapVisualizer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
-public class RectangularMap implements WorldMap {
+public class RectangularMap implements WorldMap<Animal, Vector2d> {
     private final int width;
     private final int height;
     private final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -15,9 +16,7 @@ public class RectangularMap implements WorldMap {
         this.height = height;
     }
 
-    @Override
-    public boolean place(Animal animal) {
-        Vector2d position = animal.getCurrentPosition();
+    public boolean place(Animal animal, Vector2d position) {
 
         if (isOccupied(position)) {
             return false; // Position is already occupied
@@ -37,13 +36,13 @@ public class RectangularMap implements WorldMap {
         //Vector2d newPosition = animal.getCurrentPosition().add(direction.toMoveVector(animal.getOrientation()));
 
         animals.remove(currentPosition);
-        animal.move(direction, position -> !isOccupied(position) && position.follows(new Vector2d(0, 0)) && position.precedes(new Vector2d(width - 1, height - 1)));
+        animal.move(direction, position -> !isOccupied((Vector2d) position) && ((Vector2d) position).follows(new Vector2d(0, 0)) && ((Vector2d) position).precedes(new Vector2d(width - 1, height - 1)));
         animals.put(animal.getCurrentPosition(), animal);
     }
 
     @Override
-    public boolean canMoveTo(Vector2d position) {
-        return !isOccupied(position) && position.follows(new Vector2d(0, 0)) && position.precedes(new Vector2d(width - 1, height - 1));
+    public boolean canMoveTo(Object position) {
+        return !isOccupied((Vector2d) position) && ((Vector2d) position).follows(new Vector2d(0, 0)) && ((Vector2d) position).precedes(new Vector2d(width - 1, height - 1));
     }
 
     @Override

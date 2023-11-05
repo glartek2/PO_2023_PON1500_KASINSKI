@@ -20,7 +20,7 @@ public class Simulation {
 
         for (Vector2d position : positions) {
             Animal animal = new Animal(position);
-            worldMap.place(animal);
+            worldMap.place(animal, animal.getCurrentPosition());
             this.animals.add(animal);
         }
     }
