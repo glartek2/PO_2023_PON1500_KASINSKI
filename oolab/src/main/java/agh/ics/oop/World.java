@@ -21,25 +21,20 @@ public class World {
         RectangularMap map = new RectangularMap(5, 5);
 
         List<MoveDirection> directionsList = OptionsParser.parse(args);
-        MoveDirection[] directionsArray = directionsList.toArray(new MoveDirection[0]);
+        //MoveDirection[] directionsArray = directionsList.toArray(new MoveDirection[0]);
 
         System.out.print("System wystartowal\n");
 
         //List<MoveDirection> directions = OptionsParser.parse(args);
-        List<Vector2d> positions = List.of(new Vector2d(0, 0), new Vector2d(0, 1));
-        //Simulation simulation = new Simulation(directions, positions, map);
-        //simulation.run();
+        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4), new Vector2d(3, 4));
+        Simulation simulation = new Simulation(directionsList, positions, map);
+        simulation.run();
 
-        GrassField grassField = new GrassField(1);
+        GrassField grassField = new GrassField(10);
         System.out.println(grassField);
 
-        Simulation simulation = new Simulation(Arrays.asList(
-                MoveDirection.FORWARD, MoveDirection.BACKWARD,
-                MoveDirection.RIGHT, MoveDirection.FORWARD,
-                MoveDirection.FORWARD, MoveDirection.RIGHT,
-                MoveDirection.BACKWARD, MoveDirection.LEFT
-        ), positions, grassField);
-        simulation.run();
+        Simulation simulation2 = new Simulation(directionsList, positions, grassField);
+        simulation2.run();
 
         //for (MoveDirection direction : directionsArray) {
             //animal.move(direction);

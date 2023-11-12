@@ -19,6 +19,7 @@ public class RectangularMap extends AbstractWorldMap {
     public boolean place(WorldElement worldElement, Vector2d position) {
         if (canMoveTo(position)) {
             animals.put(position, (Animal) worldElement);
+            super.place(worldElement, position);
             return true; // Animal placed successfully
         }
 
@@ -31,8 +32,10 @@ public class RectangularMap extends AbstractWorldMap {
         //Vector2d newPosition = animal.getCurrentPosition().add(direction.toMoveVector(animal.getOrientation()));
 
         animals.remove(currentPosition);
+        worldElementMap.remove(currentPosition);
         animal.move(direction, position -> !isOccupied((Vector2d) position) && ((Vector2d) position).follows(new Vector2d(0, 0)) && ((Vector2d) position).precedes(new Vector2d(width - 1, height - 1)));
         animals.put(animal.getPosition(), animal);
+        worldElementMap.put(animal.getPosition(), animal);
     }
 
 
@@ -43,7 +46,7 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     @Override
-    public boolean canMoveTo(Object position) {
-        return !isOccupied((Vector2d) position) && ((Vector2d) position).follows(new Vector2d(0, 0)) && ((Vector2d) position).precedes(new Vector2d(width - 1, height - 1));
+    public boolean canMoveTo(Vector2d position) {
+        return !isOccupied(position) && (position).follows(new Vector2d(0, 0)) && (position).precedes(new Vector2d(width - 1, height - 1));
     }
 }

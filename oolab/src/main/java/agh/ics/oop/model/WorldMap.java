@@ -14,8 +14,6 @@ public interface WorldMap<T, P> extends MoveValidator {
 
     //void move(T object, MoveDirection direction);
 
-    boolean canMoveTo(Object position);
-
     void move(Animal animal, MoveDirection direction);
 
     boolean isOccupied(P position);

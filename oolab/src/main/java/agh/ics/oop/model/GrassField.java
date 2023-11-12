@@ -35,34 +35,6 @@ public class GrassField extends AbstractWorldMap {
         return super.toString();
     }
 
-    private String draw(Vector2d lowerLeft, Vector2d upperRight) {
-        StringBuilder builder = new StringBuilder();
-        for (int y = upperRight.getY(); y >= lowerLeft.getY(); y--) {
-            for (int x = lowerLeft.getX(); x <= upperRight.getX(); x++) {
-                Vector2d position = new Vector2d(x, y);
-                WorldElement element = objectAt(position);
-                if (element != null) {
-                    builder.append(element.toString());
-                } else {
-                    builder.append(" ");
-                }
-            }
-            builder.append(System.lineSeparator());
-        }
-        return builder.toString();
-    }
 
-
-    @Override
-    public boolean canMoveTo(Object position) {
-        return false;
-    }
-
-    @Override
-    public List<WorldElement> getElements() {
-        List<WorldElement> elements = new ArrayList<>(super.getElements());
-        elements.addAll(grassList);
-        return elements;
-    }
 }
 
