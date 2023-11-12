@@ -1,11 +1,12 @@
 package agh.ics.oop.model;
 
-public class Animal {
+public class Animal implements WorldElement {
 
     private MapDirection orientation;
     private Vector2d currentPosition;
 
-    public Vector2d getCurrentPosition() {
+    @Override
+    public Vector2d getPosition() {
         return currentPosition;
     }
 

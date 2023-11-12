@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,9 +25,20 @@ public class World {
 
         System.out.print("System wystartowal\n");
 
-        List<MoveDirection> directions = OptionsParser.parse(args);
-        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-        Simulation simulation = new Simulation(directions, positions, map);
+        //List<MoveDirection> directions = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(0, 0), new Vector2d(0, 1));
+        //Simulation simulation = new Simulation(directions, positions, map);
+        //simulation.run();
+
+        GrassField grassField = new GrassField(1);
+        System.out.println(grassField);
+
+        Simulation simulation = new Simulation(Arrays.asList(
+                MoveDirection.FORWARD, MoveDirection.BACKWARD,
+                MoveDirection.RIGHT, MoveDirection.FORWARD,
+                MoveDirection.FORWARD, MoveDirection.RIGHT,
+                MoveDirection.BACKWARD, MoveDirection.LEFT
+        ), positions, grassField);
         simulation.run();
 
         //for (MoveDirection direction : directionsArray) {

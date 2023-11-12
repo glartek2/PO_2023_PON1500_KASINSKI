@@ -5,6 +5,7 @@ import agh.ics.oop.model.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -34,7 +35,7 @@ public class SimulationIntegrationTest {
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
 
         // Create a Simulation with the WorldMap
-        Simulation simulation = new Simulation(directions, positions, map);
+        Simulation simulation = new Simulation(directions, positions, new GrassField(10));
         simulation.run();
 
         System.setOut(System.out);

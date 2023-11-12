@@ -1,32 +1,38 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.GrassField;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.WorldMap;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Simulation {
-    private final WorldMap worldMap;
+    private final GrassField grassField;
     private final List<Animal> animals;
     private final List<MoveDirection> moveDirections;
 
-    public Simulation(List<MoveDirection> directions, List<Vector2d> positions, WorldMap worldMap) {
+    public Simulation(List<MoveDirection> directions, List<Vector2d> positions, GrassField grassField) {
+        this.grassField = grassField;
         this.moveDirections = directions;
-        this.worldMap = worldMap;
         this.animals = new ArrayList<>();
 
+        Set<Vector2d> set = new HashSet<Vector2d>();
         for (Vector2d position : positions) {
+            set.add(position);
+        }
+        for (Vector2d position : set){
             Animal animal = new Animal(position);
-            worldMap.place(animal, animal.getCurrentPosition());
+            grassField.place(animal, position);
             this.animals.add(animal);
         }
     }
 
-
     public void run() {
+        System.out.print("Stan mapy:\n" + grassField + "\n");
         int totalDirections = moveDirections.size();
         int numAnimals = animals.size();
 
@@ -34,9 +40,9 @@ public class Simulation {
             MoveDirection direction = moveDirections.get(i);
             Animal currentAnimal = animals.get(i % numAnimals);
 
-            worldMap.move(currentAnimal, direction);
+            grassField.move(currentAnimal, direction);
             System.out.print("Zwierze " + (i % numAnimals + 1) + ": " + currentAnimal + "\n");
-            System.out.print("Stan mapy:\n" + worldMap + "\n");
+            System.out.print("Stan mapy:\n" + grassField + "\n");
         }
     }
 }
