@@ -5,15 +5,26 @@ public enum MapDirection {
     EAST,
     SOUTH,
     WEST;
-    public String toString(){
-        String direction = null;
-        switch (this){
-            case NORTH -> direction = "Polnoc";
-            case SOUTH -> direction = "Poludnie";
-            case EAST -> direction = "Wschod";
-            case WEST -> direction = "Zachod";
+    @Override
+    public String toString() {
+        char orientationChar;
+        switch (this) {
+            case NORTH:
+                orientationChar = 'N';
+                break;
+            case EAST:
+                orientationChar = 'E';
+                break;
+            case SOUTH:
+                orientationChar = 'S';
+                break;
+            case WEST:
+                orientationChar = 'W';
+                break;
+            default:
+                orientationChar = '?'; // Handle an unknown direction
         }
-        return direction;
+        return Character.toString(orientationChar);
     }
 
     public MapDirection next(){
