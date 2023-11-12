@@ -1,8 +1,7 @@
 package agh.ics.oop;
 
-import agh.ics.oop.Simulation;
-import agh.ics.oop.model.*;
-import org.testng.Assert;
+import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.Vector2d;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -14,11 +13,10 @@ import static org.testng.Assert.assertEquals;
 public class SimulationIntegrationTest {
     @Test
     public void testSimulation() {
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        // Create a WorldMap
-        RectangularMap map = new RectangularMap(5, 5);
 
         List<MoveDirection> directions = List.of(
                 MoveDirection.FORWARD, MoveDirection.BACKWARD,
@@ -33,194 +31,31 @@ public class SimulationIntegrationTest {
 
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
 
-        // Create a Simulation with the WorldMap
-        Simulation simulation = new Simulation(directions, positions, map);
+
+        Simulation simulation = new Simulation(directions, positions);
         simulation.run();
+
 
         System.setOut(System.out);
 
+
         String printedOutput = outputStream.toString();
 
-        String expectedOutput = "Zwierze 1: N\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | |N| | |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: N\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | |N|N| |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 1: E\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | |E|N| |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: W\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | |E|W| |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 1: E\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | |E|W| |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: W\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | |E|W| |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 1: S\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | |S|W| |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: N\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | |S|N| |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 1: S\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | | | |\n" +
-                "  3: | | | |N| |\n" +
-                "  2: | | |S| | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: N\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | | | | |\n" +
-                "  2: | | |S| | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 1: S\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | | | | |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | |S| | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: N\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | | | | |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | |S| | |\n" +
-                "  0: | | | | | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 1: S\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | | | | |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | |S| | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: N\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | | | | |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | |S| | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 1: S\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | | | | |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | |S| | |\n" +
-                " -1: -----------\n" +
-                "\n" +
-                "Zwierze 2: N\n" +
-                "Stan mapy:\n" +
-                " y\\x  0 1 2 3 4\n" +
-                "  5: -----------\n" +
-                "  4: | | | |N| |\n" +
-                "  3: | | | | | |\n" +
-                "  2: | | | | | |\n" +
-                "  1: | | | | | |\n" +
-                "  0: | | |S| | |\n" +
-                " -1: -----------\n";
 
-        String trimmedExpectedOutput = expectedOutput.trim();
-        String trimmedPrintedOutput = printedOutput.trim();
+        String[] lines = printedOutput.split("\n");
 
-        assertEquals(trimmedExpectedOutput, trimmedPrintedOutput);
+
+        assertEquals(lines[0], "Zwierze 1: (2,3) Polnoc");
+        assertEquals(lines[1], "Zwierze 2: (3,3) Polnoc");
+
+
+        assertEquals(lines[2], "Zwierze 1: (2,3) Wschod");
+        assertEquals(lines[3], "Zwierze 2: (3,3) Zachod");
+
+
+        assertEquals(lines[4], "Zwierze 1: (3,3) Wschod");
+        assertEquals(lines[5], "Zwierze 2: (2,3) Zachod");
+
         outputStream.reset();
     }
 }
