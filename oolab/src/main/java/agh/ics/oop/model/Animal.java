@@ -5,6 +5,13 @@ public class Animal {
     private MapDirection orientation;
     private Vector2d currentPosition;
 
+    public Vector2d getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public MapDirection getOrientation() {
+        return orientation;
+    }
 
     public Animal() {
         this.currentPosition = new Vector2d (2, 2);
@@ -17,31 +24,36 @@ public class Animal {
     }
 
     @Override
-    public String toString(){
-        return currentPosition.toString() + " " + orientation.toString();
+    public String toString() {
+        return orientation.toString();
     }
 
     public boolean isAt(Vector2d position){
         return this.currentPosition.equals(position);
     }
 
-    public void move(MoveDirection direction){
+    public void move(MoveDirection direction, MoveValidator validator) {
         Vector2d newPosition;
-        switch (direction){
-            case RIGHT -> this.orientation = this.orientation.next();
-            case LEFT -> this.orientation = this.orientation.previous();
-            case FORWARD -> {
+        switch (direction) {
+            case RIGHT:
+                this.orientation = this.orientation.next();
+                break;
+            case LEFT:
+                this.orientation = this.orientation.previous();
+                break;
+            case FORWARD:
                 newPosition = this.currentPosition.add(this.orientation.toUnitVector());
-                if (newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4))) {
+                if (validator.canMoveTo(newPosition)) {
                     this.currentPosition = newPosition;
                 }
-            }
-            case BACKWARD -> {
+                break;
+            case BACKWARD:
                 newPosition = this.currentPosition.subtract(this.orientation.toUnitVector());
-                if (newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4))) {
+                if (validator.canMoveTo(newPosition)) {
                     this.currentPosition = newPosition;
                 }
-            }
+                break;
         }
+
     }
 }
