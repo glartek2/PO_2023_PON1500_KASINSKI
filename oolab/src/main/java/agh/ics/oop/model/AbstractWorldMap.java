@@ -10,13 +10,30 @@ import java.util.Map;
 public abstract class AbstractWorldMap implements WorldMap <WorldElement, Vector2d> {
     protected final Map<Vector2d, WorldElement> worldElementMap = new HashMap<>();
 
-    public boolean place(WorldElement worldElement, Vector2d position) {
+    private List<MapChangeListener> observers = new ArrayList<>();
+    public void addObserver(MapChangeListener observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(MapChangeListener observer) {
+        observers.remove(observer);
+    }
+
+    protected void notifyObservers(String message) {
+        for (MapChangeListener observer : observers) {
+            observer.mapChanged(this, message);
+        }
+    }
+    public abstract Boundary getCurrentBounds();
+
+    public boolean place(WorldElement worldElement, Vector2d position) throws PositionAlreadyOccupiedException {
 
         if (!canMoveTo(position)){
-            return false;
+            throw new PositionAlreadyOccupiedException(position);
         }
 
         worldElementMap.put(position, worldElement);
+        notifyObservers(worldElement + " placed at " + position);
         return true; // Animal placed successfully
     }
 
@@ -28,6 +45,7 @@ public abstract class AbstractWorldMap implements WorldMap <WorldElement, Vector
         worldElementMap.remove(currentPosition);
         animal.move(direction, position -> !isOccupied((Vector2d) position));
         worldElementMap.put(animal.getPosition(), animal);
+        notifyObservers(animal + " moved to " + animal.getPosition());
     }
 
     @Override
@@ -79,8 +97,9 @@ public abstract class AbstractWorldMap implements WorldMap <WorldElement, Vector
 
     @Override
     public String toString() {
+        Boundary bounds = getCurrentBounds();
         MapVisualizer visualizer = new MapVisualizer(this);
-        return visualizer.draw(getLowerLeft(), getUpperRight());
+        return visualizer.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 
     private String draw(Vector2d lowerLeft, Vector2d upperRight) {

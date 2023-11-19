@@ -9,13 +9,13 @@ import java.util.Random;
 public class GrassField extends AbstractWorldMap {
     private final List<Grass> grassList;
 
-    public GrassField(int grassCount) {
+    public GrassField(int grassCount) throws PositionAlreadyOccupiedException {
         super();
         this.grassList = new ArrayList<>();
         placeGrass(grassCount);
     }
 
-    private void placeGrass(int grassCount) {
+    private void placeGrass(int grassCount) throws PositionAlreadyOccupiedException {
         Random rand = new Random();
 
             int x = (int) Math.sqrt(grassCount * 10) + 1;
@@ -27,6 +27,11 @@ public class GrassField extends AbstractWorldMap {
                 grassList.add(grass);
                 super.place(grass, grassPosition);
             }
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        return new Boundary(super.getLowerLeft(), super.getUpperRight());
     }
 
     @Override

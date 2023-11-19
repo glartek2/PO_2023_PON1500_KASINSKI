@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface WorldMap<T, P> extends MoveValidator {
 
-    boolean place(T object, P position);
+    boolean place(T object, P position) throws PositionAlreadyOccupiedException;
 
     //void move(T object, MoveDirection direction);
 

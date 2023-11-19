@@ -12,7 +12,7 @@ public class Simulation {
     private final List<Animal> animals;
     private final List<MoveDirection> moveDirections;
 
-    public Simulation(List<MoveDirection> directions, List<Vector2d> positions, WorldMap worldMap) {
+    public Simulation(List<MoveDirection> directions, List<Vector2d> positions, WorldMap worldMap) throws PositionAlreadyOccupiedException {
         this.worldMap = worldMap;
         this.moveDirections = directions;
         this.animals = new ArrayList<>();
@@ -37,8 +37,8 @@ public class Simulation {
             Animal currentAnimal = animals.get(i % numAnimals);
 
             worldMap.move(currentAnimal, direction);
-            System.out.print("Zwierze " + (i % numAnimals + 1) + ": " + currentAnimal + "\n");
-            System.out.print("Stan mapy:\n" + worldMap + "\n");
+            //System.out.print("Zwierze " + (i % numAnimals + 1) + ": " + currentAnimal + "\n");
+            //System.out.print("Stan mapy:\n" + worldMap + "\n");
         }
     }
 

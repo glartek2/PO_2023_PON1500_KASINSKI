@@ -16,14 +16,20 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     @Override
-    public boolean place(WorldElement worldElement, Vector2d position) {
+    public Boundary getCurrentBounds() {
+        return new Boundary(new Vector2d(0, 0).lowerLeft(new Vector2d(width + 1, height + 1)), new Vector2d(this.width - 1, this.height - 1).upperRight(new Vector2d(0, 0)));
+    }
+
+    @Override
+    public boolean place(WorldElement worldElement, Vector2d position) throws PositionAlreadyOccupiedException {
         if (canMoveTo(position)) {
             animals.put(position, (Animal) worldElement);
             super.place(worldElement, position);
+            notifyObservers(worldElement + " placed at " + position);
             return true; // Animal placed successfully
         }
 
-        return false; // Position is out of bounds
+        throw new PositionAlreadyOccupiedException(position);
     }
 
     @Override
@@ -36,13 +42,15 @@ public class RectangularMap extends AbstractWorldMap {
         animal.move(direction, position -> !isOccupied((Vector2d) position) && ((Vector2d) position).follows(new Vector2d(0, 0)) && ((Vector2d) position).precedes(new Vector2d(width - 1, height - 1)));
         animals.put(animal.getPosition(), animal);
         worldElementMap.put(animal.getPosition(), animal);
+        notifyObservers(animal + " moved to " + animal.getPosition());
     }
 
 
     @Override
     public String toString() {
+        Boundary bounds = getCurrentBounds();
         MapVisualizer visualizer = new MapVisualizer(this);
-        return visualizer.draw(new Vector2d(0, 0).lowerLeft(new Vector2d(this.width + 1, this.height + 1)), new Vector2d(this.width - 1, this.height - 1).upperRight(new Vector2d(0, 0)));
+        return visualizer.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 
     @Override

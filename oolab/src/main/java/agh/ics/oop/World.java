@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class World {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PositionAlreadyOccupiedException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -19,6 +19,8 @@ public class World {
         //String[] arguments = input.split(" ");
 
         RectangularMap map = new RectangularMap(5, 5);
+        ConsoleMapDisplay obs = new ConsoleMapDisplay();
+        map.addObserver(obs);
 
         List<MoveDirection> directionsList = OptionsParser.parse(args);
         //MoveDirection[] directionsArray = directionsList.toArray(new MoveDirection[0]);
@@ -31,6 +33,7 @@ public class World {
         simulation.run();
 
         GrassField grassField = new GrassField(10);
+        grassField.addObserver(obs);
         System.out.println(grassField);
 
         Simulation simulation2 = new Simulation(directionsList, positions, grassField);
