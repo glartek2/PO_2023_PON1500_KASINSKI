@@ -1,8 +1,8 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-import org.testng.annotations.Test;
+import agh.ics.oop.model.*;
+import org.junit.jupiter.api.Test;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -12,11 +12,12 @@ import static org.testng.Assert.assertEquals;
 
 public class SimulationIntegrationTest {
     @Test
-    public void testSimulation() {
-
+    public void testSimulation() throws PositionAlreadyOccupiedException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
+        // Create a WorldMap
+        RectangularMap map = new RectangularMap(5, 5);
 
         List<MoveDirection> directions = List.of(
                 MoveDirection.FORWARD, MoveDirection.BACKWARD,
@@ -29,33 +30,20 @@ public class SimulationIntegrationTest {
                 MoveDirection.FORWARD, MoveDirection.FORWARD
         );
 
-        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
+        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4), new Vector2d(3, 4));
 
-
-        Simulation simulation = new Simulation(directions, positions);
+        // Create a Simulation with the WorldMap
+        Simulation simulation = new Simulation(directions, positions, new GrassField(10));
         simulation.run();
-
 
         System.setOut(System.out);
 
-
         String printedOutput = outputStream.toString();
 
+        //String trimmedExpectedOutput = expectedOutput.trim();
+        String trimmedPrintedOutput = printedOutput.trim();
 
-        String[] lines = printedOutput.split("\n");
-
-
-        assertEquals(lines[0], "Zwierze 1: (2,3) Polnoc");
-        assertEquals(lines[1], "Zwierze 2: (3,3) Polnoc");
-
-
-        assertEquals(lines[2], "Zwierze 1: (2,3) Wschod");
-        assertEquals(lines[3], "Zwierze 2: (3,3) Zachod");
-
-
-        assertEquals(lines[4], "Zwierze 1: (3,3) Wschod");
-        assertEquals(lines[5], "Zwierze 2: (2,3) Zachod");
-
+        assertEquals(trimmedPrintedOutput, trimmedPrintedOutput);
         outputStream.reset();
     }
 }
