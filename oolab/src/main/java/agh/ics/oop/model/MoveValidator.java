@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-public interface MoveValidator<P> {
+public interface MoveValidator {
 
-    boolean canMoveTo(P position);
+    boolean canMoveTo(Vector2d position);
 }
