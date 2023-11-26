@@ -2,50 +2,46 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class World {
 
     public static void main(String[] args) throws PositionAlreadyOccupiedException {
 
-        Scanner scanner = new Scanner(System.in);
-
-        //System.out.print("Enter arguments separated by spaces (press Enter to finish): ");
-        //String input = scanner.nextLine();
-
-        //String[] arguments = input.split(" ");
-
-        RectangularMap map = new RectangularMap(5, 5);
-        ConsoleMapDisplay obs = new ConsoleMapDisplay();
-        map.addObserver(obs);
-
         List<MoveDirection> directionsList = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4), new Vector2d(3, 4));
+
+        List<Simulation> simulations = new ArrayList<>();
+
+        for (int i=0; i<3; i++){
+            RectangularMap map = new RectangularMap(5, 5, new UUID(i*6, i*4));
+            GrassField grassField = new GrassField(10, new UUID(i*2, i*5));
+            ConsoleMapDisplay obs1 = new ConsoleMapDisplay();
+            ConsoleMapDisplay obs2 = new ConsoleMapDisplay();
+            map.addObserver(obs1);
+            grassField.addObserver(obs2);
+            simulations.add(new Simulation(directionsList, positions, map));
+            simulations.add(new Simulation(directionsList, positions, grassField));
+        }
+
+
+
+
+
+        //RectangularMap map = new RectangularMap(5, 5,  new UUID(128, 32));
+        //ConsoleMapDisplay obs = new ConsoleMapDisplay();
+        //map.addObserver(obs);
+
         //MoveDirection[] directionsArray = directionsList.toArray(new MoveDirection[0]);
 
         System.out.print("System wystartowal\n");
 
-        //List<MoveDirection> directions = OptionsParser.parse(args);
-        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4), new Vector2d(3, 4));
-        Simulation simulation = new Simulation(directionsList, positions, map);
-        simulation.run();
 
-        GrassField grassField = new GrassField(10);
-        grassField.addObserver(obs);
-        System.out.println(grassField);
+        SimulationEngine simulationEngine = new SimulationEngine(simulations);
+        simulationEngine.runAsync();
+        simulationEngine.runSync();
 
-        Simulation simulation2 = new Simulation(directionsList, positions, grassField);
-        simulation2.run();
-
-        //for (MoveDirection direction : directionsArray) {
-            //animal.move(direction);
-            //System.out.println("Animal position after moving: " + animal);
-        //}
-        //System.out.println("Animal position after moving left: " + animal);
-
-        //run(directions);
         System.out.print("System zakonczyl dzialanie\n");
 
 

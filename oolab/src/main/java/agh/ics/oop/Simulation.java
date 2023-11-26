@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Simulation {
+public class Simulation implements Runnable {
     private WorldMap worldMap;
     private final List<Animal> animals;
     private final List<MoveDirection> moveDirections;
