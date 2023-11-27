@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import javafx.application.Application;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ public class World {
 
         List<Simulation> simulations = new ArrayList<>();
 
-        for (int i=0; i<3; i++){
+        for (int i=0; i<500; i++){
             RectangularMap map = new RectangularMap(5, 5, new UUID(i*6, i*4));
             GrassField grassField = new GrassField(10, new UUID(i*2, i*5));
             ConsoleMapDisplay obs1 = new ConsoleMapDisplay();
@@ -37,10 +38,15 @@ public class World {
 
         System.out.print("System wystartowal\n");
 
+        //Application.launch(SimulationApp.class, args);
 
         SimulationEngine simulationEngine = new SimulationEngine(simulations);
-        simulationEngine.runAsync();
-        simulationEngine.runSync();
+        simulationEngine.awaitSimulationsEnd();
+        //simulationEngine.runAsync();
+        //simulationEngine.runSync();
+        simulationEngine.runAsyncInThreadPool();
+
+
 
         System.out.print("System zakonczyl dzialanie\n");
 
