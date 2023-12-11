@@ -35,6 +35,11 @@ public class Simulation implements Runnable {
         for (int i = 0; i < totalDirections; i++) {
             MoveDirection direction = moveDirections.get(i);
             Animal currentAnimal = animals.get(i % numAnimals);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
             worldMap.move(currentAnimal, direction);
             //System.out.print("Zwierze " + (i % numAnimals + 1) + ": " + currentAnimal + "\n");

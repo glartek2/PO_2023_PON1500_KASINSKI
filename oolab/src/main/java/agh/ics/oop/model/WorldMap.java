@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import java.awt.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,4 +25,6 @@ public interface WorldMap<T, P> extends MoveValidator {
     UUID getMapID();
 
     List<WorldElement> getElements();
+
+    Boundary getCurrentBounds();
 }
