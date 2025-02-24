@@ -49,6 +49,9 @@ public class SimulationPresenter implements MapChangeListener{
         SimulationEngine engine = new SimulationEngine(simulations);
         engine.runAsync();
 
+
+
+
 }
 
     private void drawMap(WorldMap worldMap) {
@@ -78,7 +81,7 @@ public class SimulationPresenter implements MapChangeListener{
     }
 
     private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0));
         mapGrid.getColumnConstraints().clear();
         mapGrid.getRowConstraints().clear();
     }
