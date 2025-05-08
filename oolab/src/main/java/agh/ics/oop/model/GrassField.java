@@ -5,12 +5,14 @@ import agh.ics.oop.RandomPositionGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class GrassField extends AbstractWorldMap {
     private final List<Grass> grassList;
 
-    public GrassField(int grassCount) throws PositionAlreadyOccupiedException {
+    public GrassField(int grassCount, UUID mapID) throws PositionAlreadyOccupiedException {
         super();
+        super.setMapID(mapID);
         this.grassList = new ArrayList<>();
         placeGrass(grassCount);
     }

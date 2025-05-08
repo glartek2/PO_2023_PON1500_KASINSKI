@@ -4,13 +4,15 @@ import agh.ics.oop.MapVisualizer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class RectangularMap extends AbstractWorldMap {
     private final int width;
     private final int height;
     private final Map<Vector2d, Animal> animals = new HashMap<>();
 
-    public RectangularMap(int width, int height) {
+    public RectangularMap(int width, int height, UUID mapID) {
+        super.setMapID(mapID);
         this.width = width;
         this.height = height;
     }
